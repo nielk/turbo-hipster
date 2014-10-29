@@ -1,3 +1,5 @@
+[work in progress]
+
 I'm trying to build an angular like framework, step by step for training purpose. :)
 
 Based on the excelent work of Tero Parviainen :
