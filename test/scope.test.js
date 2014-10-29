@@ -6,7 +6,7 @@ var chai   = require('chai')
     Scope  = require('../src/scope.js');
 
 /**
- * @name: Jasmine test - scope.js
+ * @name: Chai test - scope.js
  **/
 describe('Scope', function() {
     var scope,
