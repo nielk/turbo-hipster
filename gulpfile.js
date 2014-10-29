@@ -93,7 +93,7 @@ gulp.task('template', function(){
 });
 
 /**
- * Test with Jasmine
+ * Test with Mocha
  **/
 gulp.task('test', function () {
     return gulp.src(path.test + '/*.test.js', {read: false})
