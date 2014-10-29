@@ -1,0 +1,24 @@
+{
+  "name": "my-own-angular",
+  "version": "0.0.0",
+  "description": "I'm trying to build my own angular framework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexandre Oger",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^1.6.1",
+    "chai": "^1.9.2",
+    "del": "^0.1.3",
+    "gulp": "^3.8.9",
+    "gulp-concat": "^2.4.1",
+    "gulp-jasmine": "^1.0.1",
+    "gulp-jshint": "^1.8.6",
+    "gulp-mocha": "^1.1.1",
+    "gulp-watch": "^1.1.0",
+    "lodash-node": "^2.4.1",
+    "mocha": "^2.0.1"
+  }
+}
