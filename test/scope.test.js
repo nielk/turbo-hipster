@@ -64,6 +64,10 @@ describe('Scope', function() {
         scope.$digest();
         expect(scope.nb).to.equal(3);
 
+        expect(scope.$$areEqual).to.exist;
+        scope.$watch(function() {}, function() {}, true);
+        expect(scope.$$watchers.pop().valueEq).to.be.true;
+
         // ValueEqual
         var nbChange = 0;
         scope.anArray = [12, 23, 34, 45];
@@ -71,11 +75,24 @@ describe('Scope', function() {
             return scope.anArray;
         }, function(newValue, oldValue, scope) {
             nbChange++;
-        });
+        }, true);
         scope.$digest(); // ngChange = 1
         scope.anArray.push(56);
         scope.$digest(); // ngChange = 2
         expect(nbChange).to.equal(2);
+
+        // isNaN loop
+        scope.notAnumber = NaN;
+        nbChange = 0;
+        scope.$watch(function(scope) {
+            return scope.notAnumber;
+        }, function() {
+            nbChange++;
+        });
+        scope.notAnumber = parseInt('wat', 0); // NaN
+        scope.$digest();
+        scope.$digest(); // nbChange == 1
+        expect(nbChange).to.equal(1);
 
         // ttl : time to live digest
         scope.infinite = 0;
@@ -87,5 +104,13 @@ describe('Scope', function() {
 
         expect(function() {scope.$digest()}).to.throw("10 digest iterations reached");
         expect(scope.infinite).to.equal(11); // @todo
+
+        // $eval
+        expect(scope.$eval).to.exist;
+        scope.evalNum = 3;
+        var result = scope.$eval(function(theScope) {
+            return theScope.evalNum; // 3
+        });
+        expect(result).to.equal(3);
     });
 });

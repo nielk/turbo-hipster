@@ -29,10 +29,10 @@
         _.forEach(this.$$watchers, function(watch) {
             var newValue = watch.watchFn(self);
             var oldValue = watch.last;
-            if(newValue !== oldValue) {
+            if(!self.$$areEqual(newValue, oldValue, watch.valueEq)) {
                 watch.listenerFn(newValue, oldValue, self);
                 dirty = true;
-                watch.last = newValue;
+                watch.last = (watch.valueEq ? _.cloneDeep(newValue) : newValue);
             }
         });
         return dirty;
@@ -47,6 +47,20 @@
                 throw "10 digest iterations reached";
             }
         } while (dirty);
+    };
+
+    Scope.prototype.$$areEqual = function(newValue, oldValue, valueEq) {
+        if(valueEq) {
+            return _.isEqual(newValue, oldValue);
+        } else {
+            return newValue === oldValue  ||
+                (typeof newValue === 'number' && typeof oldValue === 'number' &&
+                isNaN(newValue) && isNaN(oldValue));
+        }
+    };
+
+    Scope.prototype.$eval = function(expr, locals) {
+        return expr(this, locals);
     };
 
     /** 
